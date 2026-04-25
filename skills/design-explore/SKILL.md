@@ -49,7 +49,7 @@ Build a standalone HTML file that reproduces the current component in isolation:
 4. Include a normal/non-affected variant for visual comparison
 5. Mark the redesign zone with comments: `/* THIS IS THE PART TO REDESIGN */` and `/* END REDESIGN ZONE */`
 
-Save to: `test/design-explorations/base-{feature-slug}.html`
+Save to: `.design-exploration/{feature-slug}/base.html`
 
 **Show the user the base HTML path and ask them to open it in a browser to verify it matches the current implementation before proceeding.**
 
@@ -82,7 +82,7 @@ You are a world-class designer. Your task is to redesign [FEATURE DESCRIPTION] i
 You are a world-class designer at **[COMPANY]**. Research [COMPANY]'s design philosophy — [OPEN-ENDED BRIEF ABOUT THE COMPANY'S AESTHETIC AND APPROACH]. Study how [COMPANY] handles [RELEVANT PATTERN]. Then apply that thinking to this feature. [OPEN-ENDED QUESTION ABOUT THE KEY DESIGN TENSION].
 ```
 
-Output paths: `test/design-explorations/{company-slug}.html`
+Output paths: `.design-exploration/{feature-slug}/{company-slug}.html`
 
 The company-specific brief must:
 
@@ -109,7 +109,7 @@ When all agents are done, present a comparison table:
 | ...               | ...                                            |
 ```
 
-Tell the user: "Open these from `test/design-explorations/` — each has a dark/light toggle. Pick the one you like and I'll adapt it to the actual codebase."
+Tell the user: "Open these from `.design-exploration/{feature-slug}/` — each has a dark/light toggle. Pick the one you like and I'll adapt it to the actual codebase."
 
 ## Step 6: Adapt the winner
 
@@ -125,7 +125,7 @@ Do NOT blindly copy the standalone HTML into the codebase. The standalone file m
 
 ## Cleanup
 
-The `test/design-explorations/` directory and its files are ephemeral — they exist for comparison only. Don't commit them. Don't clean them up automatically (the user may want to reference them later).
+The `.design-exploration/` directory and its files are ephemeral — they exist for comparison only. The dot-prefix signals "local working files, don't commit." If the project doesn't already ignore it, add `.design-exploration/` to `.gitignore`. Don't clean them up automatically (the user may want to reference past explorations later).
 
 ## When this skill fits
 
