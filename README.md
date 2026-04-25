@@ -17,10 +17,10 @@ Generate multiple competing design prototypes for a UI feature, each inspired by
 ### Install
 
 ```shell
-npx skills add tomasztomczyk/skills --skill design-explore -g -y
+npx skills add tomasz-tomczyk/skills --skill design-explore -g -y
 ```
 
-Or browse on [skills.sh](https://skills.sh/tomasztomczyk/skills/design-explore).
+Or browse on [skills.sh](https://skills.sh/tomasz-tomczyk/skills/design-explore).
 
 ### What it does
 
@@ -49,9 +49,3 @@ Give it a component (a comment thread, a file tree, a theme picker) and a list o
 - Give specific companies. "Stripe, Figma, Notion, Arc" produces wildly different output than the defaults.
 - The more context the agents have about the feature's purpose and users, the bolder the designs. Volunteer it up front.
 - Open the base HTML before agents dispatch to confirm it actually matches the current implementation. Saves a re-run later.
-
----
-
-## License
-
-[MIT](LICENSE)
