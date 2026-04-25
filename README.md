@@ -1,0 +1,57 @@
+# Skills
+
+Agent skills I've built and use. Compatible with [Claude Code](https://claude.com/product/claude-code), Codex, Cursor, and other [skills.sh](https://skills.sh)-compatible agents.
+
+## Available Skills
+
+| Skill | Description |
+| --- | --- |
+| [design-explore](skills/design-explore) | Generate multiple design prototypes for a UI feature in parallel, each inspired by a different company's design language. Pick one, adapt it. |
+
+---
+
+## design-explore
+
+Generate multiple competing design prototypes for a UI feature, each inspired by a different company's design language. Each prototype is built in parallel by a separate agent, lives as a standalone HTML file with a dark/light toggle, then gets adapted to your real codebase once you pick a winner.
+
+### Install
+
+```shell
+npx skills add tomasztomczyk/skills --skill design-explore -g -y
+```
+
+Or browse on [skills.sh](https://skills.sh/tomasztomczyk/skills/design-explore).
+
+### What it does
+
+Give it a component (a comment thread, a file tree, a theme picker) and a list of companies (defaults: GitHub, Linear, Raycast, Vercel, Monzo). It will:
+
+1. Read your current implementation, extract the theme variables
+2. Build a base HTML file mirroring the component in dark + light modes
+3. Spawn one agent per company, **all in parallel**, each told to research that company's design language and apply it to your component
+4. Hand you a folder of standalone HTMLs to compare side by side
+5. Adapt the winner to your real codebase using your actual theme variables
+
+### When it fits
+
+- The codebase has a real theme system (CSS variables, light/dark) and standalone HTML can mirror it
+- The feature is a self-contained component (panel, toggle, picker, thread, card) — not a whole page
+- You want creative range, not a precise restyle
+
+### When it's the wrong tool
+
+- You already have exact specs (hex codes, fonts, spacing) — that's an implementation request, just implement it
+- The component lives in a heavy framework binding it to a design system that resists standalone reproduction
+- The feature is a full page — too much surface for parallel exploration
+
+### Tips for better results
+
+- Give specific companies. "Stripe, Figma, Notion, Arc" produces wildly different output than the defaults.
+- The more context the agents have about the feature's purpose and users, the bolder the designs. Volunteer it up front.
+- Open the base HTML before agents dispatch to confirm it actually matches the current implementation. Saves a re-run later.
+
+---
+
+## License
+
+[MIT](LICENSE)
