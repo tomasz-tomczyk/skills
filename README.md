@@ -7,6 +7,46 @@ Agent skills I've built and use. Compatible with [Claude Code](https://claude.co
 | Skill | Description |
 | --- | --- |
 | [design-explore](skills/design-explore) | Generate multiple design prototypes for a UI feature in parallel, each inspired by a different company's design language. Pick one, adapt it. |
+| [mom-test](skills/mom-test) | Generate Mom Test-style interview questions for validating feature requests and product ideas. Asks about past behavior, not hypothetical futures. |
+
+---
+
+## mom-test
+
+Generate [Mom Test](https://www.momtestbook.com/)-style interview questions for validating feature requests, user feedback, and product ideas. Based on Rob Fitzpatrick's principle: ask about past behavior, not hypothetical futures.
+
+### Install
+
+```shell
+npx skills add tomasz-tomczyk/skills --skill mom-test -g -y
+```
+
+Or browse on [skills.sh](https://skills.sh/tomasz-tomczyk/skills/mom-test).
+
+### What it does
+
+Give it a feature request (GitHub issue, Linear ticket, Slack message, or plain description) and it generates targeted questions across six categories:
+
+1. **Current workflow** — how they do things today
+2. **Pain** — how much the workaround actually costs them
+3. **Stakes** — whether it matters enough to change behavior
+4. **Solution assumptions** — whether the proposed solution matches the real need
+5. **Alternatives rejected** — what they've tried and abandoned
+6. **Sharing vs. personal** — whether the artifact is for them or shared with others
+
+Each question asks about specific past events, not imagined futures. Questions that can't be lied to.
+
+### When it fits
+
+- You received a feature request and want to validate it before committing
+- You're preparing for a user interview or discovery call
+- You want to stress-test whether a problem is real or hypothetical
+
+### When it's the wrong tool
+
+- You have quantitative data (analytics, usage logs) — look at that first
+- The requester is reporting a bug — just fix it
+- You're interviewing yourself
 
 ---
 
