@@ -8,6 +8,7 @@ Agent skills I've built and use. Compatible with [Claude Code](https://claude.co
 | --- | --- |
 | [design-explore](skills/design-explore) | Generate multiple design prototypes for a UI feature in parallel, each inspired by a different company's design language. Pick one, adapt it. |
 | [mom-test](skills/mom-test) | Generate Mom Test-style interview questions for validating feature requests and product ideas. Asks about past behavior, not hypothetical futures. |
+| [startup-email](skills/startup-email) | Write or rewrite transactional and growth emails (invitations, onboarding, referrals) using YC/Airbnb email copy principles. Personal subject lines, single CTA, social proof. |
 
 ---
 
@@ -89,3 +90,42 @@ Give it a component (a comment thread, a file tree, a theme picker) and a list o
 - Give specific companies. "Stripe, Figma, Notion, Arc" produces wildly different output than the defaults.
 - The more context the agents have about the feature's purpose and users, the bolder the designs. Volunteer it up front.
 - Open the base HTML before agents dispatch to confirm it actually matches the current implementation. Saves a re-run later.
+
+---
+
+## startup-email
+
+Write or rewrite transactional and growth emails (invitations, onboarding, referrals, re-engagement) using startup email copy principles from YC/Airbnb. Based on Gustaf Alstromer's YC growth talk and the Airbnb referral email — one of the highest-converting referral emails ever measured.
+
+### Install
+
+```shell
+npx skills add tomasz-tomczyk/skills --skill startup-email -g -y
+```
+
+Or browse on [skills.sh](https://skills.sh/tomasz-tomczyk/skills/startup-email).
+
+### What it does
+
+Give it an email to write or an existing email to rewrite. It applies the Airbnb referral pattern:
+
+1. **Subject line** — `{Person} invited you to {Product}` (personal, not branded)
+2. **From name** — `{Person} via {Product}` (social, not corporate)
+3. **Headline** — Bold, first-name, value-first
+4. **Body** — One sentence on what the product does + bold deadline for urgency
+5. **Single CTA** — One button, one action
+6. **Social proof** — Inviter's avatar + name + tenure ("On Product since May 2025")
+
+Includes a checklist, HTML email essentials (preheader, viewport, inline styles), and clear do/don't tables.
+
+### When it fits
+
+- Writing invitation, referral, or onboarding emails
+- Rewriting an existing transactional email for better conversion
+- Reviewing email copy before shipping
+
+### When it's the wrong tool
+
+- Marketing newsletters (different compliance and tone rules)
+- Password reset / verification emails (pure utility)
+- You have A/B test data that says otherwise — data beats principles
