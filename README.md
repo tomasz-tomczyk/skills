@@ -6,6 +6,7 @@ Agent skills I've built and use. Compatible with [Claude Code](https://claude.co
 
 | Skill | Description |
 | --- | --- |
+| [crit](skills/crit) | Review code, plans, diffs, or a running web app with crit inline comments. Runs the interactive review loop, then reads and addresses structured feedback. Also covers programmatic commenting and GitHub PR sync. |
 | [design-explore](skills/design-explore) | Generate multiple design prototypes for a UI feature in parallel, each inspired by a different company's design language. Pick one, adapt it. |
 | [mom-test](skills/mom-test) | Generate Mom Test-style interview questions for validating feature requests and product ideas. Asks about past behavior, not hypothetical futures. |
 | [startup-email](skills/startup-email) | Write or rewrite transactional and growth emails (invitations, onboarding, referrals) using YC/Airbnb email copy principles. Personal subject lines, single CTA, social proof. |
@@ -129,3 +130,40 @@ Includes a checklist, HTML email essentials (preheader, viewport, inline styles)
 - Marketing newsletters (different compliance and tone rules)
 - Password reset / verification emails (pure utility)
 - You have A/B test data that says otherwise — data beats principles
+
+---
+
+## crit
+
+Review code changes, plans, live pages, or local HTML files with [`crit`](https://github.com/tomasz-tomczyk/crit) — a browser-based inline-comment review tool. The skill runs the full review loop: launch crit, wait for the human to leave GitHub-style comments, read the structured feedback, address each comment, and start the next round.
+
+### Install
+
+```shell
+npx skills add tomasz-tomczyk/skills --skill crit -g -y
+```
+
+Or browse on [skills.sh](https://skills.sh/tomasz-tomczyk/skills/crit).
+
+Requires the `crit` binary on PATH — see the [crit README](https://github.com/tomasz-tomczyk/crit) for install instructions.
+
+### What it does
+
+1. Launches `crit` against a plan, a diff, a GitHub PR, a running dev server, or a local HTML file — auto-detecting the mode
+2. Blocks until the human clicks "Finish Review" in the browser
+3. Reads the structured review JSON and identifies unresolved comments
+4. Revises the referenced files and replies inline with what changed
+5. Signals round-complete and loops until the review is approved
+
+Also covers authoring comments programmatically (`crit comment`, including bulk `--json`), sharing reviews (`crit share`), and syncing to/from GitHub PRs (`crit pull` / `crit push`).
+
+### When it fits
+
+- You wrote a plan or made code changes and want structured human feedback before proceeding
+- A workflow requires a review pass before accepting non-trivial changes
+- You're leaving inline comments on code, or syncing reviews with GitHub PRs
+
+### When it's the wrong tool
+
+- You just need a quick yes/no — ask the user directly
+- The change is trivial enough that a formal review pass is overhead
