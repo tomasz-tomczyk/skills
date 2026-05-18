@@ -10,6 +10,7 @@ Agent skills I've built and use. Compatible with [Claude Code](https://claude.co
 | [design-explore](skills/design-explore) | Generate multiple design prototypes for a UI feature in parallel, each inspired by a different company's design language. Pick one, adapt it. |
 | [mom-test](skills/mom-test) | Generate Mom Test-style interview questions for validating feature requests and product ideas. Asks about past behavior, not hypothetical futures. |
 | [startup-email](skills/startup-email) | Write or rewrite transactional and growth emails (invitations, onboarding, referrals) using YC/Airbnb email copy principles. Personal subject lines, single CTA, social proof. |
+| [dev-copy](skills/dev-copy) | Audit and improve marketing copy aimed at engineers — READMEs, landing pages, feature pages, tweets. Based on Seibel's YC pitch framework adapted for dev tools. Clarity over sizzle. |
 
 ---
 
@@ -167,3 +168,48 @@ Also covers authoring comments programmatically (`crit comment`, including bulk 
 
 - You just need a quick yes/no — ask the user directly
 - The change is trivial enough that a formal review pass is overhead
+
+---
+
+## dev-copy
+
+Audit and improve marketing copy aimed at engineers — READMEs, landing pages, feature pages, tweets, launch posts. Based on Michael Seibel's YC pitch framework adapted for developer tools: clarity over sizzle, insights over feature lists, specific examples over vague descriptions.
+
+### Install
+
+```shell
+npx skills add tomasz-tomczyk/skills --skill dev-copy -g -y
+```
+
+Or browse on [skills.sh](https://skills.sh/tomasz-tomczyk/skills/dev-copy).
+
+### What it does
+
+Give it a README, homepage, or any engineer-facing copy and it audits against 10 principles:
+
+1. **Two sentences + specific example** — does the reader know what this does in 10 seconds?
+2. **Insight over features** — does it teach something non-obvious, or just list capabilities?
+3. **Order by impressiveness** — is the strongest material up front?
+4. **Specific example in every section** — scenarios, not descriptions
+5. **Credibility without life stories** — flat credentials, dogfooding signals
+6. **Traction = velocity** — momentum with timeframes, not vanity metrics
+7. **Explicit low-friction CTA** — install command, not "learn more"
+8. **Conversation, not book report** — directness, real objections addressed
+9. **Self-contained pages** — works for someone arriving from search with zero context
+10. **No misleading claims** — technical accuracy matters, engineers verify
+
+Reports findings in a table with pass/fail per section and concrete suggestions.
+
+### When it fits
+
+- Writing or rewriting a README for an open source dev tool
+- Auditing a landing page or homepage before launch
+- Reviewing feature pages, integration pages, or mode pages
+- Drafting tweets, launch posts, or HN comments
+
+### When it's the wrong tool
+
+- Internal docs or READMEs for internal tools
+- API reference / technical docs (accuracy over clarity tradeoffs reverse)
+- Copy aimed at non-technical buyers (VPs, procurement)
+- The user explicitly wants a feature list, not insight-driven copy
