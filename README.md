@@ -11,6 +11,7 @@ Agent skills I've built and use. Compatible with [Claude Code](https://claude.co
 | [mom-test](skills/mom-test) | Generate Mom Test-style interview questions for validating feature requests and product ideas. Asks about past behavior, not hypothetical futures. |
 | [startup-email](skills/startup-email) | Write or rewrite transactional and growth emails (invitations, onboarding, referrals) using YC/Airbnb email copy principles. Personal subject lines, single CTA, social proof. |
 | [dev-copy](skills/dev-copy) | Audit and improve marketing copy aimed at engineers — READMEs, landing pages, feature pages, tweets. Based on Seibel's YC pitch framework adapted for dev tools. Clarity over sizzle. |
+| [oban-jobs](skills/oban-jobs) | Battle-tested gotchas and debugging recipes for Oban background jobs in Elixir (incl. Oban Pro) — instance-name aliasing, missing timeouts, ephemeral pause state, concurrency deadlocks, batch-callback timing, and inspecting live job/queue state. |
 
 ---
 
@@ -213,3 +214,43 @@ Reports findings in a table with pass/fail per section and concrete suggestions.
 - API reference / technical docs (accuracy over clarity tradeoffs reverse)
 - Copy aimed at non-technical buyers (VPs, procurement)
 - The user explicitly wants a feature list, not insight-driven copy
+
+---
+
+## oban-jobs
+
+Hard-won gotchas and debugging recipes for [Oban](https://github.com/oban-bg/oban) background jobs in Elixir, including Oban Pro. Each entry is a real production failure mode, not theory — distilled from debugging a queue that wouldn't drain, jobs that deadlocked, and a custom Oban instance that wouldn't resolve.
+
+### Install
+
+```shell
+npx skills add tomasz-tomczyk/skills --skill oban-jobs -g -y
+```
+
+Or browse on [skills.sh](https://skills.sh/tomasz-tomczyk/skills/oban-jobs).
+
+### What it covers
+
+1. **Instance-name aliasing** — `use Oban.Worker` / `use Oban.Pro.Workers.Batch` inject `alias Oban.{Job, Worker}`, so a custom instance whose first module segment is `Job`/`Worker` resolves to the non-existent `Oban.Worker.Oban`. Fix with an `Elixir.`-prefixed `@oban_name`.
+2. **No default timeout** — `timeout/1` is `:infinity`; Oban never kills a long job. Bound long DB ops with query/connection timeouts instead.
+3. **Ephemeral pause state** — with static `queues:`, `paused: true` is only the boot state; runtime pause/resume doesn't survive a deploy. Persistence needs Oban Pro DynamicQueues (all-or-nothing).
+4. **Concurrency deadlocks** — `global_limit: 1` to serialize operations that deadlock in parallel (e.g. `REINDEX CONCURRENTLY`).
+5. **Batch-callback timing** — `handle_completed`/`handle_exhausted` only fire once the whole batch is terminal; a circuit-breaker there won't trip while jobs are still `available`.
+6. **Inspecting live state** — `Oban.check_queue/2`, querying `Oban.Job`, and reading a discard signature (simultaneous discards + empty errors + later producer `started_at` = a pod shutdown, not a code failure).
+7. **Enqueuing & running** — `Oban.insert(instance, changeset)` arg order; `Worker.perform(%Oban.Job{args: %{}})` to run inline, bypassing the queue and unique constraint.
+8. **Args are JSON** — string-key pattern matching, store IDs not structs, no large blobs.
+9. **Return values** — `:ok` / `{:error}` / `{:cancel}` / `{:snooze}` and what each does; plus the Smart Engine trap where `{:snooze}` rolls back `attempt` and loops forever.
+10. **Idempotency & Lifeline** — jobs retry by default so `perform` must be safe to repeat; the Lifeline plugin is what rescues node-orphaned jobs.
+
+For the full pattern *reference* (worker options, queue sizing, cron, Workflows/Batches, testing, `args_schema`), it points to [oliver-kriska/claude-elixir-phoenix](https://github.com/oliver-kriska/claude-elixir-phoenix) — this skill is the gotchas, that one is the reference.
+
+### When it fits
+
+- Writing or reviewing Oban workers, queues, batches, or cron jobs
+- Debugging a queue that won't drain, jobs that run forever or get discarded, or a custom instance that raises `No Oban instance named ...`
+- Investigating job/queue state on a live node
+
+### When it's the wrong tool
+
+- General Elixir/OTP questions unrelated to Oban
+- You need the canonical API surface — read the [Oban docs](https://hexdocs.pm/oban); this skill is gotchas, not reference
